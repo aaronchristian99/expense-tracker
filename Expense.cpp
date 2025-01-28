@@ -2,6 +2,7 @@
 #define EXPENSE_H
 
 #include <string>
+using namespace std;
 
 class Expense {
     private:
@@ -14,6 +15,6 @@ class Expense {
         string toString() {
             return "$" + to_string(amount) + desc + to_string(date) + "/" + to_string(month) + "/" + to_string(year);
         };
-}
+};
 
-#endif //EXPENSE_H
+#endif // GRANDPARENT_H

@@ -4,7 +4,6 @@ using namespace std;
 
 int main() {
     int option;
-    Expense expense;
 
     while (option != 5) {
         std::cout << "------------------ Expense Tracker ---------------------" << std::endl;
@@ -14,23 +13,23 @@ int main() {
 
         switch (option) {
             case 1:
-                expense.viewExpense();
+                // expense.viewExpense();
                 break;
 
             case 2:
-                expense.addExpense();
+                // expense.addExpense();
                 break;
 
             case 3:
-                expense.filterExpense();
+                // expense.filterExpense();
                 break;
 
             case 4:
-                expense.saveToFile();
+                // expense.saveToFile();
                 break;
 
             case 5:
-                expense.visualize();
+                // expense.visualize();
                 break;
 
             default:

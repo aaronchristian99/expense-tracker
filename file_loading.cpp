@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "Expense.h"
+#include "Expense.cpp"
 
 using namespace std;
 
