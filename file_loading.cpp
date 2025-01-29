@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
 #include "Expense.cpp"
 
 using namespace std;
@@ -9,27 +10,39 @@ using namespace std;
 vector<Expense> load_file(string filename) {
     ifstream file(filename);
     vector<Expense> expenses;
+
+    if (!file.is_open()) {
+        cerr << "Error: Could not open file '" << filename << "'" << endl;
+        return expenses;  // Return an empty vector
+    }
+
     string line;
 
     // Description, Amount, Day , Month, Year\n
-    while (getline(file, line)){
-        int description_end = line.find(",");
-        string description = line.substr(0, description_end);
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string description, amountStr, dayStr, monthStr, yearStr;
 
-        int amount_end = line.find(",", description_end);
-        cout << line.substr(description_end + 2, amount_end - 2) << endl;
-        double amount = stod(line.substr(description_end + 2, amount_end - 2));
+        // Extract CSV values
+        getline(ss, description, ',');
+        getline(ss, amountStr, ',');
+        getline(ss, dayStr, ',');
+        getline(ss, monthStr, ',');
+        getline(ss, yearStr, ',');
 
-        int day_end = line.find(",", amount_end);
-        int day = stoi(line.substr(amount_end + 2, day_end - 2));
+        try {
+            double amount = stod(amountStr);
+            int day = stoi(dayStr);
+            int month = stoi(monthStr);
+            int year = stoi(yearStr);
 
-        int month_end = line.find(",", day_end);
-        int month = stoi(line.substr(day_end + 2, month_end - 2));
-
-        int year = stoi(line.substr(month_end + 2));
-
-        expenses.push_back(new Expense(description, amount, day, month, year));
+            expenses.push_back(Expense(description, amount, day, month, year));
+        } catch (const exception& e) {
+            cerr << "ERROR parsing line: " << line << " | " << e.what() << endl;
+        }
     }
+
+    file.close();
 
     return expenses;
 }

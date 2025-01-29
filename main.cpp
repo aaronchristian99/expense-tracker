@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    vector<Expense> expenseList = load_file("expense_init.csv");
+    vector<Expense> expenseList = load_file("expenses_init.csv");
     int numOfExpenses = expenseList.size();
     int option;
     string userInput;
@@ -45,7 +45,7 @@ int main() {
                         numOfExpenses++;
                         break;
 
-                    }else if(userInput == "n"){ //this is awful ik, could make some date parser later on
+                    } else if(userInput == "n"){ //this is awful ik, could make some date parser later on
                         cout << "Please enter the day (dd)"  << endl;
                         cin >> day;
                         cout << "Please enter the month (mm)" << endl;
@@ -67,7 +67,7 @@ int main() {
                 if(expenseList.size() > 0){
                     cout << "List of expenses: " << endl;
                     for(int i = 0; i < numOfExpenses; i++){
-                        cout << "ID: " << i << ", " << expenseList[i].toString() << endl;
+                        cout << "ID: " << i + 1 << ", " << expenseList[i].toString() << endl;
                     }
                 } else {
                     cerr << "No expenses are present." << endl;
@@ -76,7 +76,7 @@ int main() {
                 break;
 
             case 3: { //Save to File
-                ofstream file("Expenses.csv");
+                ofstream file("expenses_output.csv");
 
                 if(!file.is_open()) {
                     cerr << "File could not be opened" << endl;
