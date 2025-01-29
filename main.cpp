@@ -27,20 +27,28 @@ int main() {
         cin >> option;
 
         switch(option){ //i just threw everything in here to just set things up
-            case 1: //Add Expense
-
+            case 1: { //Add Expense
                 cout << "Please enter the description of the expense: " << endl;
                 cin.ignore();
                 getline(cin, desc);
                 cout << "Please enter the amount of the expense: " << endl;
                 cin >> amount;
 
-                while(true){
+                ofstream tempFile;
+                tempFile.open("expenses_init.csv", ios::app);
+
+                if(!tempFile.is_open()){
+                    cout << "File could not be opened" << endl;
+                }
+
+                while(true) {
                     cout << "Would you like to use todays date? (y/n)." << endl;
                     cin >> userInput;
 
                     if(userInput == "y"){
-                        expenseList.push_back(Expense(desc,amount));
+                        Expense newExpense = Expense(desc,amount);
+                        expenseList.push_back(newExpense);
+                        tempFile << endl << newExpense.toInitCsv();
                         cout << "Expense added." << endl;;
                         numOfExpenses++;
                         break;
@@ -52,16 +60,20 @@ int main() {
                         cin >> month;
                         cout << "Please enter the year (yyyy)" << endl;
                         cin >> year;
-                        expenseList.push_back(Expense(desc,amount,day,month,year));
+                        Expense newExpense = Expense(desc,amount,day,month,year);
+                        expenseList.push_back(newExpense);
+                        tempFile << endl << newExpense.toInitCsv();
                         cout << "Expense added." << endl;
                         numOfExpenses++;
                         break;
-
                     }else{
                         cout << "Invalid option" << endl;
                     }
                 }
+
+                tempFile.close();
                 break;
+            }
 
             case 2: //View Expenses
                 if(expenseList.size() > 0){
