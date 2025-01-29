@@ -106,7 +106,7 @@ int main() {
             }
 
             case 4: //Exit Program
-                cout << "See you later neeeeeeeeerd";
+                cout << "Closing program.";
                 run = false;
                 break;
         }
