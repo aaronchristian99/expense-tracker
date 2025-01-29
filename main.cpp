@@ -2,17 +2,13 @@
 #include <fstream>
 #include <vector> 
 #include "Expense.cpp"
+#include "file_loading.cpp"
+
 using namespace std;
 
 int main() {
-    //Test code
-    // Expense expense1("test", 45.75);
-    // Expense expense2("Grocery Shopping",500, 24,2,2020);
-    // cout << expense1.toString() << endl;
-    // cout << expense2.toString() << endl;
-
-    vector<Expense> expenseList;
-    int numOfExpenses = 1;
+    vector<Expense> expenseList = load_file("expense_init.csv");
+    int numOfExpenses = expenseList.size();
     int option;
     string userInput;
     bool run = true;
@@ -23,7 +19,11 @@ int main() {
         float amount;
         string desc;
 
-        cout << "1. Add Expense" << endl << "2. View Expenses" << endl << "3. Save to File" << endl << "4. Exit Program" << endl << "Enter your input: ";
+        cout << "1. Add Expense" << endl
+             << "2. View Expenses" << endl
+             << "3. Save to File" << endl
+             << "4. Exit Program" << endl
+             << "Enter your input: ";
         cin >> option;
 
         switch(option){ //i just threw everything in here to just set things up
@@ -37,14 +37,14 @@ int main() {
 
                 while(true){
                     cout << "Would you like to use todays date? (y/n)." << endl;
-                    cin >> userInput; 
+                    cin >> userInput;
 
                     if(userInput == "y"){
                         expenseList.push_back(Expense(desc,amount));
                         cout << "Expense added." << endl;;
                         numOfExpenses++;
                         break;
-                    
+
                     }else if(userInput == "n"){ //this is awful ik, could make some date parser later on
                         cout << "Please enter the day (dd)"  << endl;
                         cin >> day;
@@ -56,7 +56,7 @@ int main() {
                         cout << "Expense added." << endl;
                         numOfExpenses++;
                         break;
-                    
+
                     }else{
                         cout << "Invalid option" << endl;
                     }
@@ -64,34 +64,40 @@ int main() {
                 break;
 
             case 2: //View Expenses
-                cout << "List of expenses: " << endl;
-                for(int i = 0; i < numOfExpenses; i++){
-                    cout << "ID: " << i << ", " << expenseList[i].toString() << endl;
+                if(expenseList.size() > 0){
+                    cout << "List of expenses: " << endl;
+                    for(int i = 0; i < numOfExpenses; i++){
+                        cout << "ID: " << i << ", " << expenseList[i].toString() << endl;
+                    }
+                } else {
+                    cerr << "No expenses are present." << endl;
                 }
+
                 break;
-            
-            case 3: //Save to File
+
+            case 3: { //Save to File
                 ofstream file("Expenses.csv");
 
                 if(!file.is_open()) {
                     cerr << "File could not be opened" << endl;
-                    return;
+                    return 1;
                 }
 
-                file << "Description, Amount, Date" << endl;
+                file << "Description,Amount,Date" << endl;
 
-                for (const auto& expense : expenseList) {
+                for (auto& expense : expenseList) {
                     file << expense.toCsv() << endl;
                 }
 
                 file.close();
                 break;
-            
+            }
+
             case 4: //Exit Program
                 cout << "See you later neeeeeeeeerd";
                 run = false;
                 break;
-        }        
+        }
     }
     
     return 0;

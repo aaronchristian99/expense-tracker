@@ -1,8 +1,9 @@
 #pragma once
-
 #include <array>
 #include <string>
 #include "currentDate.cpp"
+
+using namespace std;
 
 class Expense {
     private:

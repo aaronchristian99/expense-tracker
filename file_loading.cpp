@@ -7,12 +7,11 @@
 using namespace std;
 
 vector<Expense> load_file(string filename) {
-    
     ifstream file(filename);
     vector<Expense> expenses;
     string line;
 
-    // Description, Amount, Day , Month, Year\n 
+    // Description, Amount, Day , Month, Year\n
     while (getline(file, line)){
         int description_end = line.find(",");
         string description = line.substr(0, description_end);
@@ -33,13 +32,4 @@ vector<Expense> load_file(string filename) {
     }
 
     return expenses;
-
-}
-
-int main (){
-    vector<Expense> vi = load_file("test.txt");
-    for(auto i : vi){
-        cout << i.toString();
-    }
-    
 }
