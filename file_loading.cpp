@@ -28,7 +28,7 @@ vector<Expense> load_file(string filename) {
 
         int year = stoi(line.substr(month_end + 2));
 
-        expenses.push_back(Expense(description, amount, day, month, year));
+        expenses.push_back(new Expense(description, amount, day, month, year));
     }
 
     return expenses;
