@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector> 
 #include "Expense.cpp"
 using namespace std;
@@ -70,6 +71,20 @@ int main() {
                 break;
             
             case 3: //Save to File
+                ofstream file("Expenses.csv");
+
+                if(!file.is_open()) {
+                    cerr << "File could not be opened" << endl;
+                    return;
+                }
+
+                file << "Description, Amount, Date" << endl;
+
+                for (const auto& expense : expenseList) {
+                    file << expense.toCsv() << endl;
+                }
+
+                file.close();
                 break;
             
             case 4: //Exit Program

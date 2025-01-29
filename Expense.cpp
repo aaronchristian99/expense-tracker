@@ -28,7 +28,7 @@ class Expense {
         string toString() {
             return "$" + to_string(amount) + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year);
         };
-        string toCSV() {
-            return desc + ',' + to_string(amount) + ',' + to_string(day) + ',' + to_string(month) + ',' + to_string(year);
+        string toCsv() {
+            return desc + ',' + to_string(amount) + ',' + to_string(day) + '/' + to_string(month) + '/' + to_string(year);
         }
 };
