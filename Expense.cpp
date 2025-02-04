@@ -38,9 +38,11 @@ class Expense {
             }
         };
 
+        //Getters and setters
         string getDesc() {
-        return desc;
+            return desc;
         }
+
         int getAmount() {
             return amount;
         }
