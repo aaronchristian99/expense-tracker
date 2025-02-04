@@ -28,18 +28,21 @@ class Expense {
             }
         };
 
+        // formatted for "View Expenses"
         string toString() {
             std::ostringstream amountStream;
             amountStream << std::fixed << std::setprecision(2) << amount;
             string amountStr = amountStream.str();
             
-            return "$" + amountStr + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+            return "$" + amountStr + ", " + desc + ", " + to_string(day) + "/" + to_string(month) + "/" + to_string(year);
         }
 
+        // formatted for expenses_output.csv (export)
         string toCsv() {
             return desc + ',' + to_string(amount) + ',' + to_string(day) + '/' + to_string(month) + '/' + to_string(year);
         }
 
+        // formatted for file saving/loading
         string toInitCsv() {
             return desc + ',' + to_string(amount) + ',' + to_string(day) + ',' + to_string(month) + ',' + to_string(year);
         }
