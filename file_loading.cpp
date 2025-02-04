@@ -19,6 +19,7 @@ vector<Expense> load_file(string filename) {
     string line;
 
     // Description, Amount, Day , Month, Year\n
+    getline(file, line); //get first line
     while (getline(file, line)) {
         stringstream ss(line);
         string description, amountStr, dayStr, monthStr, yearStr;

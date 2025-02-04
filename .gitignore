@@ -3,3 +3,4 @@ build/
 .idea/
 a.out
 a.exe
+expenses_output.csv

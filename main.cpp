@@ -6,6 +6,12 @@
 
 using namespace std;
 
+void badCin(){
+    cout << endl << "Invalid option. Please try again." << endl;
+    cin.clear(); 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
 int main() {
     vector<Expense> expenseList = load_file("expenses_init.csv");
     int numOfExpenses = expenseList.size();
@@ -30,9 +36,7 @@ int main() {
             if(option >= 1 && option <= 4) {
                 break;
             } else {
-                cout << endl << "Invalid option. Please try again." << endl;
-                cin.clear(); 
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                badCin();
             }
         }
 
@@ -41,8 +45,18 @@ int main() {
                 cout << "Please enter the description of the expense: " << endl;
                 cin.ignore();
                 getline(cin, desc);
-                cout << "Please enter the amount of the expense: " << endl;
-                cin >> amount;
+                
+                while(true){
+                    cout << "Please enter the amount of the expense: " << endl;
+                    cin >> amount;
+                    if(amount > 0){
+                        break;
+                    }else{
+                        badCin();
+                    }
+
+                }
+                
 
                 ofstream tempFile;
                 tempFile.open("expenses_init.csv", ios::app);
@@ -77,7 +91,7 @@ int main() {
                         numOfExpenses++;
                         break;
                     }else{
-                        cout << "Invalid option" << endl;
+                        badCin();
                     }
                 }
 
