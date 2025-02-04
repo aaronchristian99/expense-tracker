@@ -9,7 +9,7 @@ using namespace std;
 
 /**
  * @class Expense
- * Represents a financial expense with an optional date and category.
+  * Represents a financial expense with an optional date and category.
  */
 class Expense {
     private:
@@ -37,6 +37,19 @@ class Expense {
                 this->year = year;
             }
         };
+
+        string getDesc() {
+        return desc;
+        }
+        int getAmount() {
+            return amount;
+        }
+        int getDate() {
+            return getUnixTime(day, month, year);
+        }
+        int getCategory(){
+            return category;
+        }
 
         //Returns a human-readable string representation of the expense.
         string toString() {
