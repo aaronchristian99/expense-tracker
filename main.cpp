@@ -98,6 +98,22 @@ int main() {
             case 1: { //Add Expense
                 string desc = getExpenseDescription();
                 double amount = getExpenseAmount();
+                array<int, 3> date;
+
+                while(true) {
+                    cout << "Would you like to use todays date? (y/n)." << endl;
+                    cin >> userInput;
+
+                    if(userInput == "y"){
+                        date = getCurrentDate();
+                        break;
+                    } else if(userInput == "n"){ 
+                        date = getDateFromUser();
+                        break;
+                    }else{
+                        badCin();
+                    }
+                }
 
                 ofstream tempFile;
                 tempFile.open("expenses_init.csv", ios::app);
@@ -106,31 +122,11 @@ int main() {
                     cout << "File could not be opened" << endl;
                 }
 
-                while(true) {
-                    cout << "Would you like to use todays date? (y/n)." << endl;
-                    cin >> userInput;
-
-                    if(userInput == "y"){
-                        Expense newExpense = Expense(desc,amount);
-                        expenseList.push_back(newExpense);
-                        tempFile << endl << newExpense.toInitCsv();
-                        cout << "Expense added." << endl;;
-                        numOfExpenses++;
-                        break;
-
-                    } else if(userInput == "n"){ 
-                        auto date = getDateFromUser();
-
-                        Expense newExpense = Expense(desc,amount,date[0],date[1],date[2]);
-                        expenseList.push_back(newExpense);
-                        tempFile << endl << newExpense.toInitCsv();
-                        cout << "Expense added." << endl;
-                        numOfExpenses++;
-                        break;
-                    }else{
-                        badCin();
-                    }
-                }
+                Expense newExpense = Expense(desc,amount,date[0],date[1],date[2]);
+                expenseList.push_back(newExpense);
+                tempFile << endl << newExpense.toInitCsv();
+                cout << "Expense added." << endl;
+                numOfExpenses++;
 
                 tempFile.close();
                 break;
