@@ -1,6 +1,8 @@
 #pragma once
 #include <array>
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include "currentDate.cpp"
 
 using namespace std;
@@ -27,7 +29,11 @@ class Expense {
         };
 
         string toString() {
-            return "$" + to_string(amount) + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+            std::ostringstream amountStream;
+            amountStream << std::fixed << std::setprecision(2) << amount;
+            string amountStr = amountStream.str();
+            
+            return "$" + amountStr + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year);
         }
 
         string toCsv() {
