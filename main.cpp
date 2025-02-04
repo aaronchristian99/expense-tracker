@@ -6,10 +6,67 @@
 
 using namespace std;
 
+/**
+ * @brief Handles invalid user input in a loop.
+ * Clears the input buffer and prompts the user to try again.
+ */
 void badCin(){
     cout << endl << "Invalid option. Please try again." << endl;
     cin.clear(); 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+/**
+ * @brief User inputs the description for the expense.
+ * Returns whatever the user inputs.
+ */
+string getExpenseDescription(){
+    string desc;
+    cout << "Enter the description of the expense: ";
+    cin.ignore();
+    getline(cin,desc);
+    return desc;
+}
+
+/**
+ * @brief User inputs the amount of the expense.
+ * Returns whatever the user inputs and catches if the user enters a negative or wrong type.
+ */
+double getExpenseAmount(){
+    double amount;
+    while (true){
+        cout << "Enter the amount of the expense: ";
+        cin >> amount;
+        if (amount > 0 ) return amount;
+        badCin();
+    }
+}
+
+/**
+ * @brief Prompts the user to enter a valid date (day, month, year).
+ * 
+ * Ensures that the input is within valid ranges for day (1-31), month (1-12), and a positive year.
+ * Re-prompts the user until a valid date is provided.
+ * 
+ * @return array<int, 3> An array containing day, month, and year in that order.
+ */
+array<int, 3> getDateFromUser() {
+    int day, month, year;
+    while (true) {
+        cout << "Enter day (dd): ";
+        cin >> day;
+        cout << "Enter month (mm): ";
+        cin >> month;
+        cout << "Enter year (yyyy): ";
+        cin >> year;
+
+        if (day > 0 && day <= 31 && month > 0 && month <= 12 && year > 0) {
+            return {day, month, year};
+        } else {
+            cout << "Invalid date. Please try again." << endl;
+            badCin();
+        }
+    }
 }
 
 int main() {
@@ -21,9 +78,6 @@ int main() {
     cout << "------------------ Expense Tracker ---------------------" << endl;
 
     while(run == true){
-        int day, month, year;
-        double amount;
-        string desc;
 
         while(true) {
             cout << "1. Add Expense" << endl
@@ -40,23 +94,10 @@ int main() {
             }
         }
 
-        switch(option){ //i just threw everything in here to just set things up
+        switch(option){
             case 1: { //Add Expense
-                cout << "Please enter the description of the expense: " << endl;
-                cin.ignore();
-                getline(cin, desc);
-                
-                while(true){
-                    cout << "Please enter the amount of the expense: " << endl;
-                    cin >> amount;
-                    if(amount > 0){
-                        break;
-                    }else{
-                        badCin();
-                    }
-
-                }
-                
+                string desc = getExpenseDescription();
+                double amount = getExpenseAmount();
 
                 ofstream tempFile;
                 tempFile.open("expenses_init.csv", ios::app);
@@ -77,14 +118,10 @@ int main() {
                         numOfExpenses++;
                         break;
 
-                    } else if(userInput == "n"){ //this is awful ik, could make some date parser later on
-                        cout << "Please enter the day (dd)"  << endl;
-                        cin >> day;
-                        cout << "Please enter the month (mm)" << endl;
-                        cin >> month;
-                        cout << "Please enter the year (yyyy)" << endl;
-                        cin >> year;
-                        Expense newExpense = Expense(desc,amount,day,month,year);
+                    } else if(userInput == "n"){ 
+                        auto date = getDateFromUser();
+
+                        Expense newExpense = Expense(desc,amount,date[0],date[1],date[2]);
                         expenseList.push_back(newExpense);
                         tempFile << endl << newExpense.toInitCsv();
                         cout << "Expense added." << endl;
