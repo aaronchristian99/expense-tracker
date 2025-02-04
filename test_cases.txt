@@ -1,0 +1,62 @@
+Main menu:
+    - good input: number between 1 and 4
+    - expected output: selected option
+
+    - bad input: any other character
+    - expected output: "Invalid option. Please try again."
+
+Option 1: "Add Expense"
+   
+    prompt 1: "Please enter the description of the expense:"
+        - good input: any character
+        - expected output: prompt 2
+        - no bad input.
+   
+    prompt 2: "Please enter the amount of the expense:"
+        - good input: any integer or decimal number
+        - expected output: prompt 3
+
+        - bad input: any non-number input
+        - expected output: "Invalid option. Please try again." + prompt 2
+
+    prompt 3: "Would you like to use todays date? (y/n)."
+        - good input: y or n lowercase characters
+        - expected output: continuation of program
+            - case 'y': main menu
+            - case 'n': prompt 4
+
+        - bad input: any other character
+        - expected output: "Invalid option. Please try again." + prompt 3
+    
+    prompt 4: "Please enter the day (dd)"
+        - good input: integer between 1 and 31
+        - expected output: prompt 5
+
+        - bad input: any other character or integer out of range
+        - expected output: "Invalid option. Please try again." + prompt 4
+
+    prompt 5: "Please enter the month (mm)"
+        - good input: integer between 1 and 12
+        - expected output: prompt 6
+
+        - bad input: any other character or integer out of range
+        - expected output: "Invalid option. Please try again." + prompt 5
+
+    prompt 6: "Please enter the year (yyyy)"
+        - good input: integer greater than 0
+        - expected output: main menu
+
+        - bad input: any other character or negative integer
+        - expected output: "Invalid option. Please try again." + prompt 6
+
+Option 2: "View Expense"
+    - no input
+    - expected output: list of expenses
+
+Option 3: "Save to File"
+    - no input
+    - expected output: list of expenses saved to expenses_output.csv
+
+Option 4: "Exit Program"
+    - no input
+    - expected output: program interrupts
