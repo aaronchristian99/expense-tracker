@@ -16,15 +16,25 @@ int main() {
 
     while(run == true){
         int day, month, year;
-        float amount;
+        double amount;
         string desc;
 
-        cout << "1. Add Expense" << endl
-             << "2. View Expenses" << endl
-             << "3. Save to File" << endl
-             << "4. Exit Program" << endl
-             << "Enter your input: ";
-        cin >> option;
+        while(true) {
+            cout << "1. Add Expense" << endl
+                << "2. View Expenses" << endl
+                << "3. Save to File" << endl
+                << "4. Exit Program" << endl
+                << "Enter your input: ";
+            cin >> option;
+
+            if(option >= 1 && option <= 4) {
+                break;
+            } else {
+                cout << endl << "Invalid option. Please try again." << endl;
+                cin.clear(); 
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            }
+        }
 
         switch(option){ //i just threw everything in here to just set things up
             case 1: { //Add Expense
