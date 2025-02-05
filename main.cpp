@@ -118,29 +118,32 @@ int main() {
                     }
                 }
 
-                cout << "Please enter the category of the expense: " << endl << "The categories are: " << endl
-                     << "1. Food" << endl << "2. Entertainment" << endl << "3. Bills" << endl << "4. Utilities" << endl;
-                cin >> category;
+                while(true){
+                    cout << "Please enter the category of the expense: " << endl << "The categories are: " << endl
+                        << "1. Food" << endl << "2. Entertainment" << endl << "3. Bills" << endl << "4. Utilities" << endl;
+                    cin >> category;
 
-                if (category >= 1 && category <= 4) {
-                    ofstream tempFile;
-                	tempFile.open("expenses_init.csv", ios::app);
+                    if (category >= 1 && category <= 4) {
+                        ofstream tempFile;
+                        tempFile.open("expenses_init.csv", ios::app);
 
-                	if(!tempFile.is_open()){
-                    	cout << "File could not be opened" << endl;
-                	}
+                        if(!tempFile.is_open()){
+                            cout << "File could not be opened" << endl;
+                        }
 
-                	Expense newExpense = Expense(desc, amount, category, date[0],date[1],date[2]);
-                	expenseList.push_back(newExpense);
-                	tempFile << endl << newExpense.toInitCsv();
-                	cout << "Expense added." << endl;
-                	numOfExpenses++;
+                        Expense newExpense = Expense(desc, amount, category, date[0],date[1],date[2]);
+                        expenseList.push_back(newExpense);
+                        tempFile << endl << newExpense.toInitCsv();
+                        cout << "Expense added." << endl;
+                        numOfExpenses++;
 
-                	tempFile.close();
-                	break;
-                } else {
-                    badCin();
+                        tempFile.close();
+                        break;
+                    } else {
+                        badCin();
+                    }
                 }
+                
             }
 
             case 2: //View Expenses
