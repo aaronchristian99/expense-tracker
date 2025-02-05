@@ -44,10 +44,17 @@ Option 1: "Add Expense"
 
     prompt 6: "Please enter the year (yyyy)"
         - good input: integer greater than 0
-        - expected output: main menu
+        - expected output: prompt 7
 
         - bad input: any other character or negative integer
         - expected output: "Invalid option. Please try again." + prompt 6
+
+    prompt 7: "Please enter the category of the expense"
+        - good input: integer between 1 and 4
+        - expected output: "Expense added." + main menu
+
+        - bad input: any other character or integer out of range
+        - expected output: "Invalid option. Please try again." + prompt 7
 
 Option 2: "View Expense"
     - no input
