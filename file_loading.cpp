@@ -22,7 +22,7 @@ vector<Expense> load_file(string filename) {
     getline(file, line); //get first line
     while (getline(file, line)) {
         stringstream ss(line);
-        string description, amountStr, dayStr, monthStr, yearStr;
+        string description, amountStr, dayStr, monthStr, yearStr, categoryStr;
 
         // Extract CSV values
         getline(ss, description, ',');
@@ -30,14 +30,16 @@ vector<Expense> load_file(string filename) {
         getline(ss, dayStr, ',');
         getline(ss, monthStr, ',');
         getline(ss, yearStr, ',');
+        getline(ss, categoryStr);
 
         try {
             double amount = stod(amountStr);
             int day = stoi(dayStr);
             int month = stoi(monthStr);
             int year = stoi(yearStr);
+            int category = stoi(categoryStr);
 
-            expenses.push_back(Expense(description, amount, day, month, year));
+            expenses.push_back(Expense(description, amount, category, day, month, year));
         } catch (const exception& e) {
             cerr << "ERROR parsing line: " << line << " | " << e.what() << endl;
         }

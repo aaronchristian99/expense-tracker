@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <unordered_map>
 #include "currentDate.cpp"
 
 using namespace std;
@@ -13,19 +14,24 @@ using namespace std;
  */
 class Expense {
     private:
-        int id; //Unique identifier for the expense
-        int day, month, year;
-        int category; //Category of the expense (e.g., Food, Rent)
-        string desc; //Describes what the expense is.
-        double amount; //Amount of the expense
+        int id, day, month, year, category;
+        string desc;
+        double amount;
+        unordered_map<int, string> categories;
 
     public:
         /**
          * Constructor that initializes an Expense with a description, amount, and optional date.
          * If no date is provided, it uses the current date.
          */
-        Expense(string desc, double amount, int day = -1, int month = -1, int year = -1, int category = -1) : desc(desc), amount(amount), day(day), month(month), year(year), category(category) {
-            
+        Expense(string desc, double amount, int category = -1, int day = -1, int month = -1, int year = -1) :
+            desc(desc), amount(amount), category(category), day(day), month(month), year(year) {
+
+            categories[1] = "Food";
+            categories[2] = "Entertainment";
+            categories[3] = "Bills";
+            categories[4] = "Utilities";
+
             if(day == -1 || month == -1 || year == -1){
                 array<int, 3> currentDate = getCurrentDate();
                 this->day = currentDate[0];
@@ -59,16 +65,16 @@ class Expense {
             amountStream << std::fixed << std::setprecision(2) << amount;
             string amountStr = amountStream.str();
             
-            return "$" + amountStr + ", " + desc + ", " + to_string(day) + "/" + to_string(month) + "/" + to_string(year) + "/" + to_string(category);
+            return "$" + amountStr + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year) + " " + categories[category];
         }
 
         //Formats the expense for the CSV export.
         string toCsv() {
-            return desc + ',' + to_string(amount) + ',' + to_string(day) + '/' + to_string(month) + '/' + to_string(year) + "," + to_string(category);
+            return desc + ',' + to_string(amount) + ',' + to_string(day) + '/' + to_string(month) + '/' + to_string(year) + ',' + categories[category];
         }
 
         //Formats the expense for the initial CSV saving/loading.
         string toInitCsv() {
-            return desc + ',' + to_string(amount) + ',' + to_string(day) + ',' + to_string(month) + ',' + to_string(year) + "," + to_string(category);
+            return desc + ',' + to_string(amount) + ',' + to_string(day) + ',' + to_string(month) + ',' + to_string(year) + ',' + to_string(category);
         }
 };

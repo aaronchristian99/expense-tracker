@@ -12,7 +12,7 @@ using namespace std;
  */
 void badCin(){
     cout << endl << "Invalid option. Please try again." << endl;
-    cin.clear(); 
+    cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
@@ -44,10 +44,10 @@ double getExpenseAmount(){
 
 /**
  * @brief Prompts the user to enter a valid date (day, month, year).
- * 
+ *
  * Ensures that the input is within valid ranges for day (1-31), month (1-12), and a positive year.
  * Re-prompts the user until a valid date is provided.
- * 
+ *
  * @return array<int, 3> An array containing day, month, and year in that order.
  */
 array<int, 3> getDateFromUser() {
@@ -78,6 +78,9 @@ int main() {
     cout << "------------------ Expense Tracker ---------------------" << endl;
 
     while(run == true){
+        int day, month, year, category;
+        double amount;
+        string desc;
 
         while(true) {
             cout << "1. Add Expense" << endl
@@ -107,12 +110,22 @@ int main() {
                     if(userInput == "y"){
                         date = getCurrentDate();
                         break;
-                    } else if(userInput == "n"){ 
+                    } else if(userInput == "n"){
                         date = getDateFromUser();
                         break;
                     }else{
                         badCin();
                     }
+                }
+
+                cout << "Please enter the category of the expense: " << endl << "The categories are: " << endl
+                     << "1. Food" << endl << "2. Entertainment" << endl << "3. Bills" << endl << "4. Utilities" << endl;
+                cin >> category;
+
+                if (category >= 1 && category <= 4) {
+                    continue;
+                } else {
+                    badCin();
                 }
 
                 ofstream tempFile;
@@ -122,7 +135,7 @@ int main() {
                     cout << "File could not be opened" << endl;
                 }
 
-                Expense newExpense = Expense(desc,amount,date[0],date[1],date[2]);
+                Expense newExpense = Expense(desc, amount, category, date[0],date[1],date[2]);
                 expenseList.push_back(newExpense);
                 tempFile << endl << newExpense.toInitCsv();
                 cout << "Expense added." << endl;

@@ -1,6 +1,4 @@
-Description, Price ($), Day, Month, Year
-Test,500,27,1,2025
-Hot dog,10,27,1,2025
-Coke,3,25,1,2025
-coolmoney,1234.560000,4,2,2025,-1
-test wawa,12.330000,39,99,0,-1
+Test,500,27,1,2025, 3
+Hot dog,10,27,1,2025, 1
+Coke,3,25,1,2025, 1
+coolmoney,1234.56,4,2,2025,1
