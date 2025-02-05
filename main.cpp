@@ -123,26 +123,24 @@ int main() {
                 cin >> category;
 
                 if (category >= 1 && category <= 4) {
-                    continue;
+                    ofstream tempFile;
+                	tempFile.open("expenses_init.csv", ios::app);
+
+                	if(!tempFile.is_open()){
+                    	cout << "File could not be opened" << endl;
+                	}
+
+                	Expense newExpense = Expense(desc, amount, category, date[0],date[1],date[2]);
+                	expenseList.push_back(newExpense);
+                	tempFile << endl << newExpense.toInitCsv();
+                	cout << "Expense added." << endl;
+                	numOfExpenses++;
+
+                	tempFile.close();
+                	break;
                 } else {
                     badCin();
                 }
-
-                ofstream tempFile;
-                tempFile.open("expenses_init.csv", ios::app);
-
-                if(!tempFile.is_open()){
-                    cout << "File could not be opened" << endl;
-                }
-
-                Expense newExpense = Expense(desc, amount, category, date[0],date[1],date[2]);
-                expenseList.push_back(newExpense);
-                tempFile << endl << newExpense.toInitCsv();
-                cout << "Expense added." << endl;
-                numOfExpenses++;
-
-                tempFile.close();
-                break;
             }
 
             case 2: //View Expenses
