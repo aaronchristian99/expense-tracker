@@ -3,6 +3,7 @@
 #include <vector> 
 #include "Expense.cpp"
 #include "file_loading.cpp"
+#include "CategoryStaticData.h"
 
 using namespace std;
 
@@ -65,6 +66,33 @@ array<int, 3> getDateFromUser() {
         } else {
             cout << "Invalid date. Please try again." << endl;
             badCin();
+        }
+    }
+}
+
+/**
+* @brief Checks whether the sum of expenses of each category is the limit
+* return void
+*/
+void checkExpenseLimits(vector<Expense> expenses) {
+	unordered_map<int, double> categoryTotals;
+
+    // Calculate total expenses for each category
+    for (auto& expense : expenses) {
+        categoryTotals[expense.getCategory()] += expense.getAmount();
+    }
+
+    // Compare each category total with the limit
+    for (const auto& limit : categoryLimits) {
+        int category = limit.first;
+        double limitAmount = limit.second;
+        double totalAmount = categoryTotals[category];
+
+        if (totalAmount > limitAmount) {
+            cout << "Warning: You have exceeded the budget for category " << categories.at(category) << "!" << endl;
+        } else {
+            cout << "Category " << categories.at(category) << " total expenses: $" << totalAmount
+                 << " (within the limit of $" << limitAmount << ")" << endl;
         }
     }
 }
@@ -143,7 +171,8 @@ int main() {
                         badCin();
                     }
                 }
-                
+
+                checkExpenseLimits(expenseList);
             }
 
             case 2: //View Expenses
@@ -155,6 +184,8 @@ int main() {
                 } else {
                     cerr << "No expenses are present." << endl;
                 }
+
+                checkExpenseLimits(expenseList);
 
                 break;
 

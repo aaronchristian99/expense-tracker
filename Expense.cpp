@@ -3,8 +3,8 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <unordered_map>
 #include "currentDate.cpp"
+#include "CategoryStaticData.h"
 
 using namespace std;
 
@@ -17,7 +17,6 @@ class Expense {
         int id, day, month, year, category;
         string desc;
         double amount;
-        unordered_map<int, string> categories;
 
     public:
         /**
@@ -26,11 +25,6 @@ class Expense {
          */
         Expense(string desc, double amount, int category = -1, int day = -1, int month = -1, int year = -1) :
             desc(desc), amount(amount), category(category), day(day), month(month), year(year) {
-
-            categories[1] = "Food";
-            categories[2] = "Entertainment";
-            categories[3] = "Bills";
-            categories[4] = "Utilities";
 
             if(day == -1 || month == -1 || year == -1){
                 array<int, 3> currentDate = getCurrentDate();
@@ -65,12 +59,12 @@ class Expense {
             amountStream << std::fixed << std::setprecision(2) << amount;
             string amountStr = amountStream.str();
             
-            return "$" + amountStr + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year) + " " + categories[category];
+            return "$" + amountStr + " " + desc + " " + to_string(day) + "/" + to_string(month) + "/" + to_string(year) + " " + categories.at(category);
         }
 
         //Formats the expense for the CSV export.
         string toCsv() {
-            return desc + ',' + to_string(amount) + ',' + to_string(day) + '/' + to_string(month) + '/' + to_string(year) + ',' + categories[category];
+            return desc + ',' + to_string(amount) + ',' + to_string(day) + '/' + to_string(month) + '/' + to_string(year) + ',' + categories.at(category);
         }
 
         //Formats the expense for the initial CSV saving/loading.
